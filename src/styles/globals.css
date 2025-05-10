@@ -24,3 +24,9 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.sidebar {
+  background-color: #001529; /* azul oscuro típico de Ant Design */
+  color: #fff;
+}
+
