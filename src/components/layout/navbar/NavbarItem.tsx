@@ -1,5 +1,15 @@
+"use client";
 import React from 'react';
-import { AppstoreOutlined, BarChartOutlined, DollarOutlined, FileTextOutlined, HomeOutlined, ProductOutlined, SettingOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/navigation';
+import {
+  AppstoreOutlined,
+  BarChartOutlined,
+  DollarOutlined,
+  FileTextOutlined,
+  HomeOutlined,
+  ProductOutlined,
+  SettingOutlined
+} from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 
@@ -8,55 +18,56 @@ type NavbarItemProps = {
   isDarkMode: boolean;
 };
 
-
 const items: MenuItem[] = [
   {
-    key: 'inicio',
+    key: '/',
     label: 'Inicio',
     icon: <HomeOutlined />,
   },
   {
-    key: 'productos',
+    key: '/productos',
     label: 'Productos',
     icon: <ProductOutlined />,
   },
-    {
-    key: 'ventas',
-    label: 'Facturacion',
+  {
+    key: '/ventas',
+    label: 'Facturación',
     icon: <FileTextOutlined />,
   },
   {
-    key: 'reportes',
+    key: '/reportes',
     label: 'Reportes',
     icon: <BarChartOutlined />,
   },
   {
-    key: 'caja',
+    key: '/caja',
     label: 'Caja',
     icon: <DollarOutlined />,
     children: [
-      { key: '8', label: 'Inicio Dia' },
-      { key: '9', label: 'Cierre Dia' },
+      { key: '/caja/inicio-dia', label: 'Inicio Día' },
+      { key: '/caja/cierre-dia', label: 'Cierre Día' },
     ],
   },
   {
     type: 'divider',
   },
   {
-    key: 'sub4',
-    label: 'Administracion',
+    key: '/admin',
+    label: 'Administración',
     icon: <SettingOutlined />,
     children: [
-      { key: '1', label: 'Catalogos'},
-      { key: '2', label: 'Roles' },
-      { key: '11', label: 'Usuarios' },
+      { key: '/admin/catalogos', label: 'Catálogos' },
+      { key: '/admin/roles', label: 'Roles' },
+      { key: '/admin/usuarios', label: 'Usuarios' },
     ],
   },
 ];
 
 const NavbarItem: React.FC<NavbarItemProps> = ({ isDarkMode }) => {
+  const router = useRouter();
+
   const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e);
+    router.push(e.key); // Redirige a la ruta
   };
 
   return (
@@ -64,7 +75,7 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ isDarkMode }) => {
       onClick={onClick}
       theme={isDarkMode ? 'dark' : 'light'}
       mode="inline"
-      defaultSelectedKeys={['1']}
+      defaultSelectedKeys={['/']}
       items={items}
     />
   );

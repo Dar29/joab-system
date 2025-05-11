@@ -39,7 +39,7 @@ const Navbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh'}}>
       <Sider trigger={null} collapsible collapsed={collapsed} theme={isDarkMode ? 'dark' : 'light'}>
       {!collapsed && <div
         style={{
@@ -51,7 +51,7 @@ const Navbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       </div>}
         <NavbarItem isDarkMode={isDarkMode} />
       </Sider>
-      <Layout>
+      <Layout style={{background: isDarkMode ? '#001529' : colorBgContainer,}}>
         <Header style={headerStyle}>
           <Button
             type="text"

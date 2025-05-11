@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div>
       {/* Bienvenida al Sistema */}
-      <Row justify="center" style={{ marginBottom: '20px' }}>
+      <Row justify="center" style={{ marginBottom: '70px' , marginTop: '50px'}}>
         <Col xs={24} md={16} lg={12}>
           <Title level={2} style={{ textAlign: 'center' }}>
             Bienvenido a Farmacia Joab - Sistema de Gestión
@@ -16,8 +16,7 @@ export default function Home() {
           <Paragraph style={{
         textAlign: 'center',
         fontSize: '16px',
-        backgroundColor: 'rgba(240, 248, 255, 0.7)',  // Azul pálido con opacidad 0.7
-
+        backgroundColor: 'rgba(240, 248, 255, 2)',  // Azul pálido con opacidad 0.7
         padding: '10px',
         borderRadius: '8px',
         marginTop: '20px', // Añade margen en la parte superior para separarlo de la imagen
