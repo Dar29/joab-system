@@ -84,12 +84,13 @@ const Navbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             margin: '10px 10px',
             padding: 20,
             minHeight: 280,
-            background: colorBgContainer,
             borderRadius: borderRadiusLG,
+            color: isDarkMode ? '#fff' : 'inherit',
           }}
         >
           {children}
         </Content>
+
       </Layout>
     </Layout>
   );
