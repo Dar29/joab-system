@@ -11,6 +11,7 @@
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
     "ag-grid-community": "^33.3.0",
+    "ag-grid-enterprise": "^33.3.0",
     "ag-grid-react": "^33.3.0",
     "antd": "^5.25.0",
     "mssql": "^11.0.1",

@@ -81,8 +81,7 @@ const Navbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         </Header>
         <Content
           style={{
-            margin: '10px 10px',
-            padding: 20,
+            margin: '5px',
             minHeight: 280,
             borderRadius: borderRadiusLG,
             color: isDarkMode ? '#fff' : 'inherit',
