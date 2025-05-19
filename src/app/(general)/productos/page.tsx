@@ -3,21 +3,51 @@
 
 import React, { useState, useEffect } from 'react';
 import Table from '@/src/components/table/Table'; // Asegúrate de que la ruta es correcta
+import { Spin } from 'antd';
 
 const columnDefs = [
     { field: "id_producto",headerName: "Código" },
-    { field: "nombre", headerName: "Nombre" },
+    { field: "nombre", headerName: "Nombre", width:250},
+    { field: "precio_venta", headerName: "Precio Venta" },
+    { field: "categoria", headerName: "Categoría" },
+    { field: "presentacion", headerName: "Presentación" },
+    { field: "stock", headerName: "Stock" },
+    { field: "dosis", headerName: "Dósis" },
+    { field: "venta", headerName: "Tipo de Venta" },
     { field: "descripcion", headerName: "Descripción" },
     { field: "precio_compra", headerName: "Precio Compra" },
-    { field: "precio_venta", headerName: "Precio Venta" },
-    { field: "stock", headerName: "Stock" },
-    { field: "id_proveedor", headerName: "Código Proveedor" },
-    { field: "id_categoria_detalle", headerName: "Código Categoría" },
-    { field: "fecha_ingreso", headerName: "Fecha Ingreso" },
-    { field: "fecha_vencimiento", headerName: "Fecha Vencimiento" },
-    { field: "fecha_grabacion", headerName: "Fecha Grabación" },
-    { field: "fecha_modificacion", headerName: "Fecha Modificación" },
+    { field: "proveedor", headerName: "Proveedor" },
+    {
+      field: "fecha_vencimiento",
+      headerName: "Fecha Vencimiento",
+      valueFormatter: (params: any) => {
+        const date = new Date(params.value);
+        return isNaN(date.getTime())
+          ? ''
+          : `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+      },
+    },
+    {
+      field: "fecha_grabacion",
+      headerName: "Fecha Grabación",
+      valueFormatter: (params: any) => {
+        const date = new Date(params.value);
+        return isNaN(date.getTime())
+          ? ''
+          : `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+      },
+    },
     { field: "usuario_graba", headerName: "Usuario Graba" },
+    {
+      field: "fecha_modificacion",
+      headerName: "Fecha Modificación",
+      valueFormatter: (params: any) => {
+        const date = new Date(params.value);
+        return isNaN(date.getTime())
+          ? ''
+          : `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+      },
+    },
     { field: "usuario_modifica", headerName: "Usuario Modifica" },
 ];
 
@@ -31,17 +61,15 @@ const Page = () => {
       try {
         setLoading(true);
 
-        const response = await fetch('http://localhost:3000/api/products'); // Reemplaza con la URL de tu endpoint
+        const response = await fetch('http://localhost:3000/api/products');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const resp = await response.json();
         setRowData(resp.data);
       } catch (error: any) {
-        // 5. Manejar errores
         setError(error.message);
       } finally {
-        // 6. Indicar que la carga ha terminado, ya sea con éxito o error
         setLoading(false);
       }
     };
@@ -55,8 +83,20 @@ const Page = () => {
   }, [rowData]);
 
   if (loading) {
-    return <div>Loading...</div>;
-  }
+  return (
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Spin size="large" />
+    </div>
+  );
+}
+
 
   if (error) {
     return <div>Error: {error}</div>;

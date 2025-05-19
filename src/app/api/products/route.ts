@@ -3,7 +3,7 @@ import { queryView } from '@/src/db/connection';  // Asegúrate de importar la f
 
 export async function GET(request: NextRequest) {
   try {
-    const productos = await queryView('tbl_productos');
+    const productos = await queryView('products_view');
     return NextResponse.json({
       message: 'Datos obtenidos correctamente',
       data: productos,

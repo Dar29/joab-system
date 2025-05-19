@@ -14,9 +14,6 @@ import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 
 type MenuItem = Required<MenuProps>['items'][number];
-type NavbarItemProps = {
-  isDarkMode: boolean;
-};
 
 const items: MenuItem[] = [
   {
@@ -63,7 +60,7 @@ const items: MenuItem[] = [
   },
 ];
 
-const NavbarItem: React.FC<NavbarItemProps> = ({ isDarkMode }) => {
+const NavbarItem = () => {
   const router = useRouter();
 
   const onClick: MenuProps['onClick'] = (e) => {
@@ -73,7 +70,7 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ isDarkMode }) => {
   return (
     <Menu
       onClick={onClick}
-      theme={isDarkMode ? 'dark' : 'light'}
+      theme={ 'light'}
       mode="inline"
       defaultSelectedKeys={['/']}
       items={items}
