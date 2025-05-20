@@ -9,7 +9,7 @@ interface ButtonComponentProps {
   onClick?: () => void;
 }
 
-const ButtonComponent: React.FC<ButtonComponentProps> = ({ onClick }) => {
+const ExportButton: React.FC<ButtonComponentProps> = ({ onClick }) => {
   const [size] = useState<SizeType>('large');
   const [hovered, setHovered] = useState(false);
   const [pressed, setPressed] = useState(false);
@@ -53,4 +53,4 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({ onClick }) => {
   );
 };
 
-export default ButtonComponent;
+export default ExportButton;

@@ -104,7 +104,7 @@ const Page = () => {
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column"}}>
-      <h1 style={{ flex: 0, padding: "1rem", textAlign: "left", color:"#005f3e"}}>
+      <h1 style={{paddingLeft: "1rem", textAlign: "left", color:"#005f3e"}}>
         Inventario de Productos
       </h1>
       <div style={{ flex: 1}}>

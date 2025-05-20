@@ -2,11 +2,12 @@
 
 import React, { useRef } from "react";
 import { AgGridReact } from "ag-grid-react";
-import {ModuleRegistry} from "ag-grid-community";
+import { ModuleRegistry } from "ag-grid-community";
 import { AllEnterpriseModule } from "ag-grid-enterprise";
 import AddButton from "../AddButton";
 import ButtonComponent from "../ExportButton";
-
+import { useRouter } from 'next/navigation'; // Importa useRouter
+import ExportButton from "../ExportButton";
 
 ModuleRegistry.registerModules([AllEnterpriseModule]);
 
@@ -17,6 +18,7 @@ interface TableProps {
 
 const Table: React.FC<TableProps> = ({ rowData, columnDefs }) => {
   const gridRef = useRef<AgGridReact>(null);
+  const router = useRouter();
 
   const defaultColDef = {
     editable: true,
@@ -32,12 +34,12 @@ const Table: React.FC<TableProps> = ({ rowData, columnDefs }) => {
   };
 
   const handleAddProduct = () => {
-    console.log("Agregar producto clickeado");
+    router.push('/productos/ingresar-producto');
   };
 
   const handleExport = () => {
     if (gridRef.current) {
-      gridRef.current.api.exportDataAsExcel(); // Esto exporta a Excel
+      gridRef.current.api.exportDataAsExcel();
     }
   };
 
@@ -56,7 +58,7 @@ const Table: React.FC<TableProps> = ({ rowData, columnDefs }) => {
             borderRadius: "4px",
           }}
         />
-        <ButtonComponent onClick={handleExport} />
+        <ExportButton onClick={handleExport} />
       </div>
       <AgGridReact
         ref={gridRef}
