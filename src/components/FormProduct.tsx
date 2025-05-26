@@ -13,6 +13,7 @@ import {
 import NoteMessage from './Message';
 import BasicButtons from './ButtonComponent';
 import SuccessButtons from './ButtonComponent';
+import { Catalogos, DataCatalogos } from '../types/catalogs';
 
 const { TextArea } = Input;
 
@@ -21,7 +22,11 @@ const formItemStyle = {
     width: '39%'
 };
 
-const FormProduct: React.FC = () => {
+interface FormProductProps {
+  catalogos: Catalogos;
+}
+
+const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {  
   return (
     <div style={{ height: "90%", display: "flex", flexDirection: "column", margin:"10px", marginTop:"5px"}}>
       <NoteMessage message="Verifique cuidadosamente la información ingresada. La precisión es crucial para el registro del producto." 
@@ -39,21 +44,27 @@ const FormProduct: React.FC = () => {
           <Input />
         </Form.Item>
         <Form.Item label="Proveedores" style={formItemStyle}>
-          <Select>
-            <Select.Option value="demo">Demo</Select.Option>
+          <Select placeholder="Seleccione un proveedor">
+            {catalogos.proveedores.map((item, index) => (
+              <Select.Option key={index} value={item.id}>{item.valor}</Select.Option>
+            ))}
           </Select>
         </Form.Item>
         <Form.Item
           label="Categoria" style={formItemStyle}
           rules={[{ required: true, message: 'Por favor, seleccione la categoría!' }]}
         >
-          <Select>
-            <Select.Option value="demo">Demo</Select.Option>
+          <Select placeholder="Seleccione una categoría">
+            {catalogos.categorias.map((item, index) => (
+              <Select.Option key={index} value={item.id}>{item.valor}</Select.Option>
+            ))}
           </Select>
         </Form.Item>
         <Form.Item label="Presentacion" style={formItemStyle}>
-          <Select>
-            <Select.Option value="demo">Demo</Select.Option>
+          <Select placeholder="Seleccione una presentación">
+            {catalogos.presentaciones.map((item, index) => (
+              <Select.Option key={index} value={item.id}>{item.valor}</Select.Option>
+            ))}
           </Select>
         </Form.Item>
         <Form.Item
@@ -63,8 +74,10 @@ const FormProduct: React.FC = () => {
           <InputNumber />
         </Form.Item>
          <Form.Item label="Unidad" style={formItemStyle}>
-          <Select>
-            <Select.Option value="demo">Demo</Select.Option>
+          <Select placeholder="Seleccione una unidad">
+            {catalogos.unidades.map((item, index) => (
+              <Select.Option key={index} value={item.id}>{item.valor}</Select.Option>
+            ))}
           </Select>
         </Form.Item>
         <Form.Item label="Fecha Ingreso" style={formItemStyle}>
@@ -112,4 +125,4 @@ const FormProduct: React.FC = () => {
   );
 };
 
-export default () => <FormProduct />;
+export default FormProduct;

@@ -14,9 +14,9 @@ const LogoInicio = () => {
           }}>
             <Link href="/">
                 <Image
-                    src="/inicio.png"
+                    src="/logo.png"
                     alt="Logo"
-                    width={120}
+                    width={160}
                     preview={false}
                 />
             </Link>
