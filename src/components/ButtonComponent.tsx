@@ -1,11 +1,17 @@
 import * as React from 'react';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
-export default function SuccessButtons() {
+interface ButtonProps {
+  variant: 'text' | 'outlined' | 'contained';
+  color: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+  text: string;
+  onClick?: () => void;
+}
+
+export default function ButtonComponent({ variant, color, text, onClick }: ButtonProps) {
   return (
-      <Button variant="contained" color="success">
-        Agregar
-      </Button>
+    <Button variant={variant} color={color} onClick={onClick}>
+      {text}
+    </Button>
   );
 }

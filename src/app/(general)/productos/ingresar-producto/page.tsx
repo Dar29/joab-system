@@ -3,6 +3,7 @@
 import FormProduct from "@/src/components/FormProduct";
 import React, { useState, useEffect } from 'react';
 import { Catalogos, CatalogoItem } from "@/src/types/catalogs"; // Ajusta ruta si es diferente
+import { Spin } from "antd";
 
 const IngresarProducto = () => {
   const [catalogos, setCatalogos] = useState<Catalogos>({
@@ -85,9 +86,18 @@ const IngresarProducto = () => {
   return (
     <>
       {loading ? (
-        <p>Cargando catálogos...</p>
+      <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Spin size="large" />
+    </div>
       ) : error ? (
-        <p>Error: {error}</p>
+         <div>Error: {error}</div>
       ) : (
         <FormProduct catalogos={catalogos} />
       )}
