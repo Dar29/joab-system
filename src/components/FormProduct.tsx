@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/navigation'; // Importa useRouter
+
 import {
   Button,
   DatePicker,
@@ -9,11 +11,14 @@ import {
   Radio,
   Select,
   Slider,
+  AutoComplete,
+  AutoCompleteProps,
 } from 'antd';
 import NoteMessage from './Message';
 import ButtonComponent from './ButtonComponent';
-import { Catalogos } from '../types/catalogs';
+import { CatalogoItem, Catalogos } from '../types/catalogs';
 import { Box } from '@mui/material';
+import ConfirmDialog from './ConfirmDialog';
 
 const { TextArea } = Input;
 
@@ -24,10 +29,18 @@ const formItemStyle = {
 
 interface FormProductProps {
   catalogos: Catalogos;
+  onProductAdded: (newProduct: CatalogoItem) => void; // Añade esta línea
 }
 
 const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
   const [form] = Form.useForm();
+  const router = useRouter();
+  const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
+  const [valoresPendientes, setValoresPendientes] = useState<any>(null); // Para guardar temporalmente el `values`
+
+  const [options, setOptions] = useState<AutoCompleteProps['options']>([]);
+  const [productName, setProductName] = useState<string>('');
+
 
   const precioCompra = Form.useWatch("precio_compra", form);
   const margen = Form.useWatch("margen", form);
@@ -39,6 +52,39 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
     }
   }, [precioCompra, margen, form]);
 
+  const insertarProducto = async (values: any) => {
+    const dataToSend = {
+      ...values,
+      nombre: productName,
+      usuario_graba: 'dljimenez',
+    };
+
+    try {
+      const response = await fetch('http://localhost:3000/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        form.resetFields();
+        setProductName('');
+      } else {
+        console.error('Error al insertar:', data.message);
+      }
+    } catch (error) {
+      console.error('Error de red al insertar:', error);
+    }
+  };
+
+  const handleGoBack = () => {
+    router.back(); // Esto navega a la página anterior en el historial del navegador
+  };
+
   return (
     <div style={{ height: "90%", display: "flex", flexDirection: "column", margin: "10px", marginTop: "5px" }}>
       <NoteMessage
@@ -49,30 +95,17 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
         form={form}
         initialValues={{ id_tipo_venta: 49, margen: 30 }} 
         onFinish={async (values) => {
-          const dataToSend = {
-            ...values,
-            usuario_graba: 'dljimenez',
-          };
+          const existeProducto = catalogos.productos.some(
+            producto => producto.valor.toLowerCase() === productName.toLowerCase()
+          );
 
-          try {
-            const response = await fetch('http://localhost:3000/api/products', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(dataToSend), // Use dataToSend here
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-              console.log('Producto insertado correctamente:', data);
-            } else {
-              console.error('Error al insertar:', data.message);
-            }
-          } catch (error) {
-            console.error('Error de red al insertar:', error);
+          if (existeProducto) {
+            setValoresPendientes(values);
+            setMostrarConfirmacion(true);
+            return;
           }
+
+          await insertarProducto(values);
         }}
 
         onFinishFailed={({ errorFields }) => {
@@ -84,15 +117,28 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
         style={{ height: "90%", alignItems: "center", marginTop: "2%", marginLeft: "18%" }}
       >
         <Form.Item
-          label="Nombre del Producto"
+          label="Nombre"
           style={formItemStyle}
-          name={"nombre"}
+          name="nombre"
           rules={[{ required: true, message: 'Campo requerido' }]}
         >
-          <Input />
+          <AutoComplete
+            value={productName}
+            onChange={(value) => {
+              setProductName(value);
+              const filtered = catalogos.productos?.filter((producto) =>
+                producto.valor.toLowerCase().includes(value.toLowerCase())
+              ) || [];
+              const newOptions = filtered.map(item => ({ value: item.valor, key: item.id }));
+              setOptions(newOptions);
+            }}
+            onSelect={(value) => setProductName(value)}
+            options={options}
+            placeholder="Ingrese nombre del producto"
+          />
         </Form.Item>
         <Form.Item label="Proveedores" style={formItemStyle} name={"id_proveedor"}>
-          <Select placeholder="Seleccione un proveedor">
+          <Select showSearch placeholder="Seleccione un proveedor">
             {catalogos.proveedores.map((item, index) => (
               <Select.Option key={index} value={item.id}>{item.valor}</Select.Option>
             ))}
@@ -103,14 +149,14 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
           style={formItemStyle}
           name={"id_categoria"}
         >
-          <Select placeholder="Seleccione una categoría">
+          <Select showSearch placeholder="Seleccione una categoría">
             {catalogos.categorias.map((item, index) => (
               <Select.Option key={index} value={item.id}>{item.valor}</Select.Option>
             ))}
           </Select>
         </Form.Item>
         <Form.Item label="Presentacion" style={formItemStyle} name={"id_presentacion"}>
-          <Select placeholder="Seleccione una presentación">
+          <Select showSearch placeholder="Seleccione una presentación">
             {catalogos.presentaciones.map((item, index) => (
               <Select.Option key={index} value={item.id}>{item.valor}</Select.Option>
             ))}
@@ -124,7 +170,7 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
           <InputNumber min={0} />
         </Form.Item>
         <Form.Item label="Unidad" style={formItemStyle} name={"id_unidad_dosis"}>
-          <Select placeholder="Seleccione una unidad">
+          <Select showSearch placeholder="Seleccione una unidad">
             {catalogos.unidades.map((item, index) => (
               <Select.Option key={index} value={item.id}>{item.valor}</Select.Option>
             ))}
@@ -187,15 +233,28 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
         </Form.Item>
       </Form>
       <Box display="flex" justifyContent="space-between" paddingLeft={10} paddingRight={10}>
-        <ButtonComponent variant="contained" color="primary" text="Regresar" />
+        <ButtonComponent variant="contained" color="primary" text="Regresar" onClick={handleGoBack} />
         <ButtonComponent variant="contained" color="success" text="Agregar" onClick={() => form.submit()} />
       </Box>
+      <ConfirmDialog
+        message={`El producto "${productName}" ya existe. ¿Deseas ingresarlo de todos modos?`}
+        visible={mostrarConfirmacion}
+        onConfirm={async () => {
+          setMostrarConfirmacion(false);
+          if (valoresPendientes) {
+            await insertarProducto(valoresPendientes);
+            setValoresPendientes(null);
+          }
+        }}
+        onCancel={() => {
+          setMostrarConfirmacion(false);
+          setValoresPendientes(null);
+        }}
+      />
+
     </div>
   );
 };
 
 export default FormProduct;
-function dayjs(): any {
-  throw new Error('Function not implemented.');
-}
 

@@ -18,6 +18,7 @@ export interface CatalogoItem {
 }
 
 export interface Catalogos {
+  productos: CatalogoItem[];
   proveedores: CatalogoItem[];
   categorias: CatalogoItem[];
   unidades: CatalogoItem[];

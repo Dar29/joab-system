@@ -17,7 +17,6 @@ export const queryView = async (name: string) => {
     const pool = await sql.connect(config);
     const result = await pool.request().query(`SELECT * FROM ${name}`);
     await pool.close();
-    console.log(`✅ Datos obtenidos de la vista ${name}:`, result.recordset);
     return result.recordset;
   } catch (error) {
     console.error(`❌ Error al consultar la vista ${name}:`, error);
@@ -40,7 +39,6 @@ export async function insertData(table: string, data: Record<string, any>) {
     });
 
     const query = `INSERT INTO ${table} (${columns}) VALUES (${values}); SELECT SCOPE_IDENTITY() AS id;`;
-    console.log(query);
     const result = await request.query(query);
 
     await pool.close();
