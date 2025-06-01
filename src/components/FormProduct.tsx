@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation'; // Importa useRouter
-
+import dayjs from 'dayjs';
 import {
   Button,
   DatePicker,
@@ -13,12 +13,16 @@ import {
   Slider,
   AutoComplete,
   AutoCompleteProps,
+  Divider,
 } from 'antd';
 import NoteMessage from './Message';
 import ButtonComponent from './ButtonComponent';
 import { CatalogoItem, Catalogos } from '../types/catalogs';
 import { Box } from '@mui/material';
 import ConfirmDialog from './ConfirmDialog';
+import AlertError from './AlertError';
+import { message } from 'antd';
+import AlertSuccess from './AlertSuccess';
 
 const { TextArea } = Input;
 
@@ -40,17 +44,20 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
 
   const [options, setOptions] = useState<AutoCompleteProps['options']>([]);
   const [productName, setProductName] = useState<string>('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+
 
 
   const precioCompra = Form.useWatch("precio_compra", form);
   const margen = Form.useWatch("margen", form);
 
   useEffect(() => {
-    if (precioCompra != null && margen != null) {
-      const precioVenta = +(precioCompra + (precioCompra * (margen / 100))).toFixed(2);
-      form.setFieldsValue({ precio_venta: precioVenta });
-    }
-  }, [precioCompra, margen, form]);
+  if (precioCompra != null && margen != null) {
+    const precioVenta = Math.round(precioCompra + (precioCompra * (margen / 100)));
+    form.setFieldsValue({ precio_venta: precioVenta });
+  }
+}, [precioCompra, margen, form]);
 
   const insertarProducto = async (values: any) => {
     const dataToSend = {
@@ -73,11 +80,16 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
       if (response.ok) {
         form.resetFields();
         setProductName('');
+        setSuccessMsg(data.message || 'Error al insertar producto');
+        // setTimeout(() => {
+        //   router.push('/productos');
+        // }, 2000);
       } else {
-        console.error('Error al insertar:', data.message);
+        setErrorMsg(data.message || 'Error al insertar producto');
       }
     } catch (error) {
       console.error('Error de red al insertar:', error);
+      setErrorMsg('Error de red al insertar producto');
     }
   };
 
@@ -114,8 +126,11 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
         labelCol={{ span: 60 }}
         wrapperCol={{ span: 30 }}
         layout="inline"
-        style={{ height: "90%", alignItems: "center", marginTop: "2%", marginLeft: "18%" }}
+        style={{ height: "90%", alignItems: "center", marginTop: "2%", marginLeft: "10%" , marginBottom: "1%"}}
       >
+        <Divider orientation="left" style={{ color: 'rgba(0, 0, 0, 0.5)' }}>
+          General
+        </Divider>
         <Form.Item
           label="Nombre"
           style={formItemStyle}
@@ -137,7 +152,9 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
             placeholder="Ingrese nombre del producto"
           />
         </Form.Item>
-        <Form.Item label="Proveedores" style={formItemStyle} name={"id_proveedor"}>
+        <Form.Item label="Proveedores" style={formItemStyle} name={"id_proveedor"}
+                rules={[{ required: true, message: 'Campo requerido' }]}
+        >
           <Select showSearch placeholder="Seleccione un proveedor">
             {catalogos.proveedores.map((item, index) => (
               <Select.Option key={index} value={item.id}>{item.valor}</Select.Option>
@@ -148,6 +165,7 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
           label="Categoria"
           style={formItemStyle}
           name={"id_categoria"}
+          rules={[{ required: true, message: 'Campo requerido' }]}
         >
           <Select showSearch placeholder="Seleccione una categoría">
             {catalogos.categorias.map((item, index) => (
@@ -155,7 +173,8 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
             ))}
           </Select>
         </Form.Item>
-        <Form.Item label="Presentacion" style={formItemStyle} name={"id_presentacion"}>
+        <Form.Item label="Presentacion" style={formItemStyle} name={"id_presentacion"} rules={[{ required: true, message: 'Campo requerido' }]}
+        >
           <Select showSearch placeholder="Seleccione una presentación">
             {catalogos.presentaciones.map((item, index) => (
               <Select.Option key={index} value={item.id}>{item.valor}</Select.Option>
@@ -166,31 +185,19 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
           label="Dosis"
           style={formItemStyle}
           name={"dosis"}
+          rules={[{ required: true, message: 'Campo requerido' }]}
         >
           <InputNumber min={0} />
         </Form.Item>
-        <Form.Item label="Unidad" style={formItemStyle} name={"id_unidad_dosis"}>
+        <Form.Item label="Unidad" style={formItemStyle} name={"id_unidad_dosis"} rules={[{ required: true, message: 'Campo requerido' }]}>
           <Select showSearch placeholder="Seleccione una unidad">
             {catalogos.unidades.map((item, index) => (
               <Select.Option key={index} value={item.id}>{item.valor}</Select.Option>
             ))}
           </Select>
         </Form.Item>
-        <Form.Item label="Fecha Ingreso" style={formItemStyle} name={"fecha_grabacion"}
-                  rules={[{ required: true, message: 'Campo requerido' }]}>
-          <DatePicker />
-        </Form.Item>
-        <Form.Item label="Fecha Vencimiento" style={formItemStyle} name={"fecha_vencimiento"}
-                  rules={[{ required: true, message: 'Campo requerido' }]}>
-          <DatePicker />
-        </Form.Item>
-        <Form.Item
-          label="Cantidad"
-          style={formItemStyle}
-          name={"stock"}
-          rules={[{ required: true, message: 'Campo requerido' }]}
-        >
-          <InputNumber min={0} />
+        <Form.Item label="Breve Descripcion" style={formItemStyle} name={"descripcion"}>
+          <TextArea rows={1} />
         </Form.Item>
         <Form.Item label="Venta" style={formItemStyle} name={"id_tipo_venta"} >
           <Radio.Group>
@@ -198,11 +205,31 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
             <Radio value={49}> Sin Receta </Radio>
           </Radio.Group>
         </Form.Item>
+        <Divider orientation="left" style={{ color: 'rgba(0, 0, 0, 0.5)' }}>
+          Ingreso
+        </Divider>
+        {/* <Form.Item label="Fecha Ingreso" style={formItemStyle} name={"fecha_grabacion"}>
+          <DatePicker />
+        </Form.Item> */}
+        <Form.Item label="Fecha Vencimiento" style={formItemStyle} name={"fecha_vencimiento"}>
+          <DatePicker
+            disabledDate={(current) => {
+              // Bloquea todas las fechas menores o iguales al 07/06/2025 si hoy es 31/05/2025
+              return current && current < dayjs().add(7, 'day').startOf('day');
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Cantidad"
+          style={formItemStyle}
+          name={"stock"}
+        >
+          <InputNumber min={0} />
+        </Form.Item> 
         <Form.Item
           label="Precio Compra"
           style={formItemStyle}
           name={"precio_compra"}
-          rules={[{ required: true, message: 'Campo requerido' }]}
         >
           <InputNumber<number>
             min={0}
@@ -218,7 +245,6 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
           label="Precio Venta"
           style={formItemStyle}
           name={"precio_venta"}
-          rules={[{ required: true, message: 'Campo requerido' }]}
         >
           <InputNumber<number>
             min={0}
@@ -227,11 +253,16 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
             formatter={(value) => `C$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             parser={(value) => parseFloat(value?.replace(/[^0-9.]/g, '') || '0')}
           />
+          
         </Form.Item>
-        <Form.Item label="Breve Descripcion" style={formItemStyle} name={"descripcion"}>
-          <TextArea rows={1} />
-        </Form.Item>
+        {errorMsg && (
+          <AlertError message={errorMsg} />
+        )}
+        {successMsg && (
+          <AlertSuccess message={successMsg} />
+        )}
       </Form>
+      
       <Box display="flex" justifyContent="space-between" paddingLeft={10} paddingRight={10}>
         <ButtonComponent variant="contained" color="primary" text="Regresar" onClick={handleGoBack} />
         <ButtonComponent variant="contained" color="success" text="Agregar" onClick={() => form.submit()} />

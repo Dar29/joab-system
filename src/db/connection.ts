@@ -24,6 +24,28 @@ export const queryView = async (name: string) => {
   }
 };
 
+export const executeSP = async (spName: string, body: Record<string, any>) => {
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+
+    // Recorrer los campos del JSON y agregarlos como parámetros
+    for (const key in body) {
+      if (body.hasOwnProperty(key)) {
+        request.input(key, body[key]);
+      }
+    }
+
+    const result = await request.execute(spName);
+    await pool.close();
+
+    return result.recordset;
+  } catch (error) {
+    console.error(`❌ Error al ejecutar el SP ${spName}:`, error);
+    throw error;
+  }
+};
+
 export async function insertData(table: string, data: Record<string, any>) {
   try {
     const pool = await sql.connect(config);

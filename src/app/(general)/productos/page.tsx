@@ -18,36 +18,34 @@ const columnDefs = [
     { field: "precio_compra", headerName: "Precio Compra" },
     { field: "proveedor", headerName: "Proveedor" },
     {
-      field: "fecha_vencimiento",
-      headerName: "Fecha Vencimiento",
+      field: "fecha_grabacion",
+      headerName: "Fecha Grabación",
       valueFormatter: (params: any) => {
-        const date = new Date(params.value);
+        const rawDate = params.value;
+        if (!rawDate) return ''; // si es null, undefined o vacío
+        const date = new Date(rawDate);
         return isNaN(date.getTime())
           ? ''
           : `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
       },
     },
     {
-      field: "fecha_grabacion",
-      headerName: "Fecha Grabación",
-      valueFormatter: (params: any) => {
-        const date = new Date(params.value);
-        return isNaN(date.getTime())
-          ? ''
-          : `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
-      },
+      field: "usuario_graba",
+      headerName: "Usuario Graba"
     },
-    { field: "usuario_graba", headerName: "Usuario Graba" },
     {
       field: "fecha_modificacion",
       headerName: "Fecha Modificación",
       valueFormatter: (params: any) => {
-        const date = new Date(params.value);
+        const rawDate = params.value;
+        if (!rawDate) return '';
+        const date = new Date(rawDate);
         return isNaN(date.getTime())
           ? ''
           : `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
       },
     },
+
     { field: "usuario_modifica", headerName: "Usuario Modifica" },
 ];
 

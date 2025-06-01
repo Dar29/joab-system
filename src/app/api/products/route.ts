@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { insertData, queryView } from '@/src/db/connection';  // Asegúrate de importar la función de consulta
+import { executeSP, insertData, queryView } from '@/src/db/connection';  // Asegúrate de importar la función de consulta
 
 export async function GET(request: NextRequest) {
   try {
@@ -22,16 +22,28 @@ export async function POST(request: NextRequest) {
     const body = await request.json(); // Obtiene el JSON enviado desde el cliente
 
     // Validación básica
-    if (!body.nombre || !body.precio_compra || !body.precio_venta || !body.stock || !body.fecha_vencimiento || !body.fecha_grabacion
-      || !body.fecha_grabacion || !body.usuario_graba
+    if (
+      body.fecha_vencimiento !== undefined ||
+      body.stock !== undefined ||
+      body.precio_compra !== undefined ||
+      body.precio_venta !== undefined
     ) {
-      return NextResponse.json({
-        message: 'Faltan campos obligatorios',
-      }, { status: 400 });
+      if (
+        !body.fecha_vencimiento ||
+        body.stock === undefined ||
+        body.precio_compra === undefined ||
+        body.precio_venta === undefined
+      ) {
+        return NextResponse.json(
+          { message: 'Para registrar ingreso debe llenar todos los campos' },
+          { status: 400 }
+        );
+      }
     }
 
+
     // Insertar en la base de datos
-    const result = await insertData('tbl_productos', body);
+    const result = await executeSP('sp_inserta_producto', body);
 
     return NextResponse.json({
       message: 'Producto insertado correctamente',
