@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useRef , useState} from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ModuleRegistry } from "ag-grid-community";
 import { AllEnterpriseModule } from "ag-grid-enterprise";
 import AddButton from "../AddButton";
-import ButtonComponent from "../ExportButton";
-import { useRouter } from 'next/navigation'; // Importa useRouter
 import ExportButton from "../ExportButton";
+import { useRouter } from 'next/navigation';
 
 ModuleRegistry.registerModules([AllEnterpriseModule]);
 
@@ -19,6 +18,20 @@ interface TableProps {
 const Table: React.FC<TableProps> = ({ rowData, columnDefs }) => {
   const gridRef = useRef<AgGridReact>(null);
   const router = useRouter();
+  const [searchText, setSearchText] = useState("");
+  const [filteredData, setFilteredData] = useState<any[]>(rowData);
+
+  useEffect(() => {
+    // Filtrado simple: convierte cada fila en string y revisa si incluye el texto
+    const lowerSearch = searchText.toLowerCase();
+    const result = rowData.filter((row) =>
+      Object.values(row).some((value) =>
+        String(value).toLowerCase().includes(lowerSearch)
+      )
+    );
+    setFilteredData(result);
+  }, [searchText, rowData]);
+  
 
   const defaultColDef = {
     editable: true,
@@ -48,7 +61,10 @@ const Table: React.FC<TableProps> = ({ rowData, columnDefs }) => {
       <div style={{ display: "flex", alignItems: "center", padding: "5px" }}>
         <AddButton title="Agregar producto" onClick={handleAddProduct} />
         <input
-          type="text" placeholder="Buscar..."
+          type="text"
+          placeholder="Buscar..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
           style={{
             padding: "0.5rem",
             fontSize: "1rem",
@@ -64,7 +80,7 @@ const Table: React.FC<TableProps> = ({ rowData, columnDefs }) => {
         ref={gridRef}
         className={'ag-theme-quartz'}
         columnDefs={columnDefs}
-        rowData={rowData}
+        rowData={filteredData}
         defaultColDef={defaultColDef}
         sideBar
       />

@@ -6,12 +6,12 @@ import Table from '@/src/components/table/Table'; // Asegúrate de que la ruta e
 import { Spin } from 'antd';
 
 const columnDefs = [
-    { field: "id_producto",headerName: "Código" },
-    { field: "nombre", headerName: "Nombre", width:250},
-    { field: "precio_venta", headerName: "Precio Venta" },
+    { field: "id_producto",headerName: "Código", width: 120, hide: true},
+    { field: "nombre", headerName: "Nombre", width: 250, pinned: 'left'},
+    { field: "precio_venta", headerName: "Precio Venta", width: 150, pinned: 'left'},
     { field: "categoria", headerName: "Categoría" },
     { field: "presentacion", headerName: "Presentación" },
-    { field: "stock", headerName: "Stock" },
+    { field: "stock", headerName: "Stock", width: 110, pinned: 'left'},
     { field: "dosis", headerName: "Dósis" },
     { field: "venta", headerName: "Tipo de Venta" },
     { field: "descripcion", headerName: "Descripción" },

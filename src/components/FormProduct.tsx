@@ -201,8 +201,8 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
         </Form.Item>
         <Form.Item label="Venta" style={formItemStyle} name={"id_tipo_venta"} >
           <Radio.Group>
-            <Radio value={48}> Con Receta </Radio>
-            <Radio value={49}> Sin Receta </Radio>
+            <Radio value={51}> Con Receta </Radio>
+            <Radio value={52}> Sin Receta </Radio>
           </Radio.Group>
         </Form.Item>
         <Divider orientation="left" style={{ color: 'rgba(0, 0, 0, 0.5)' }}>
