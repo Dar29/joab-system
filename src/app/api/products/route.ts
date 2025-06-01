@@ -26,13 +26,15 @@ export async function POST(request: NextRequest) {
       body.fecha_vencimiento !== undefined ||
       body.stock !== undefined ||
       body.precio_compra !== undefined ||
-      body.precio_venta !== undefined
+      body.precio_venta !== undefined ||
+      body.id_proveedor !== undefined
     ) {
       if (
         !body.fecha_vencimiento ||
         body.stock === undefined ||
         body.precio_compra === undefined ||
-        body.precio_venta === undefined
+        body.precio_venta === undefined ||
+        body.id_proveedor == undefined
       ) {
         return NextResponse.json(
           { message: 'Para registrar ingreso debe llenar todos los campos' },

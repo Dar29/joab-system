@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   AppstoreOutlined,
@@ -61,10 +61,12 @@ const items: MenuItem[] = [
 ];
 
 const NavbarItem = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
   const onClick: MenuProps['onClick'] = (e) => {
-    router.push(e.key); // Redirige a la ruta
+    setLoading(true);
+    router.push(e.key);
   };
 
   return (

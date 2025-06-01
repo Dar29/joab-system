@@ -95,6 +95,7 @@ const IngresarProducto = () => {
   }, []);
 
   const handleProductAddedToCatalog = (newProduct: CatalogoItem) => {
+    setLoading(true);
     setCatalogos(prevCatalogos => ({
       ...prevCatalogos,
       productos: [...prevCatalogos.productos, newProduct], // Añade el nuevo producto al array de productos

@@ -53,10 +53,10 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
   const margen = Form.useWatch("margen", form);
 
   useEffect(() => {
-  if (precioCompra != null && margen != null) {
-    const precioVenta = Math.round(precioCompra + (precioCompra * (margen / 100)));
-    form.setFieldsValue({ precio_venta: precioVenta });
-  }
+    if (precioCompra != null && margen != null) {
+      const precioVenta = +(precioCompra + (precioCompra * (margen / 100))).toFixed(2);
+      form.setFieldsValue({ precio_venta: precioVenta });
+    }
 }, [precioCompra, margen, form]);
 
   const insertarProducto = async (values: any) => {
@@ -80,11 +80,13 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
       if (response.ok) {
         form.resetFields();
         setProductName('');
+        setErrorMsg('');
         setSuccessMsg(data.message || 'Error al insertar producto');
         // setTimeout(() => {
         //   router.push('/productos');
         // }, 2000);
       } else {
+        setSuccessMsg('');
         setErrorMsg(data.message || 'Error al insertar producto');
       }
     } catch (error) {
@@ -105,7 +107,7 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
       />
       <Form
         form={form}
-        initialValues={{ id_tipo_venta: 49, margen: 30 }} 
+        initialValues={{ id_tipo_venta: 52, margen: 30 }} 
         onFinish={async (values) => {
           const existeProducto = catalogos.productos.some(
             producto => producto.valor.toLowerCase() === productName.toLowerCase()
@@ -153,7 +155,6 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
           />
         </Form.Item>
         <Form.Item label="Proveedores" style={formItemStyle} name={"id_proveedor"}
-                rules={[{ required: true, message: 'Campo requerido' }]}
         >
           <Select showSearch placeholder="Seleccione un proveedor">
             {catalogos.proveedores.map((item, index) => (

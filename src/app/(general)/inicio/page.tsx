@@ -1,10 +1,13 @@
 'use client';
 
+import ButtonComponent from '@/src/components/ButtonComponent';
 import { Typography, Row, Col, Image, Card, Button } from 'antd';
 
 const { Title, Paragraph } = Typography;
 
 export default function Home() {
+  const handleGoBack = () => {
+  };
   return (
     <div>
       {/* Bienvenida al Sistema */}
@@ -31,17 +34,14 @@ export default function Home() {
         </Col>
       </Row>
 
-      {/* Tarjetas de tutoriales */}
-      <Row gutter={[24, 24]} justify="center">
+      <Row gutter={[24, 24]} justify="center" style={{margin:50}}>
         <Col xs={24} sm={12} md={8}>
           <Card
             title="Introducción al Sistema"
             hoverable
             cover={<img alt="Introducción al Sistema" src="/tutorial1.png" />}
             actions={[
-              <Button type="primary" href="https://www.youtube.com/watch?v=tutorial1" target="_blank" block>
-                Ver video
-              </Button>,
+              <ButtonComponent variant="contained" color="primary" text="Ver Video" onClick={handleGoBack} />
             ]}
           >
             <Paragraph>Descubre cómo iniciar sesión y navegar por el sistema en este breve tutorial.</Paragraph>
@@ -53,9 +53,7 @@ export default function Home() {
             hoverable
             cover={<img alt="Gestión de Inventarios" src="/tutorial2.png" />}
             actions={[
-              <Button type="primary" href="https://www.youtube.com/watch?v=tutorial2" target="_blank" block>
-                Ver video
-              </Button>,
+              <ButtonComponent variant="contained" color="primary" text="Ver Video" onClick={handleGoBack} />
             ]}
           >
             <Paragraph>Aprende cómo gestionar productos e inventarios de manera fácil y rápida.</Paragraph>
@@ -67,9 +65,7 @@ export default function Home() {
             hoverable
             cover={<img alt="Generación de Reportes" src="/tutorial3.png" />}
             actions={[
-              <Button type="primary" href="https://www.youtube.com/watch?v=tutorial3" target="_blank" block>
-                Ver video
-              </Button>,
+              <ButtonComponent variant="contained" color="primary" text="Ver Video" onClick={handleGoBack} />
             ]}
           >
             <Paragraph>En este tutorial, te enseñamos cómo generar reportes detallados de ventas y productos.</Paragraph>
