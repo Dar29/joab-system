@@ -52,7 +52,7 @@ const columnDefs = [
     {
       field: "fecha_modificacion",
       headerName: "Fecha Modificación", hide: true,
-      valueFormatter: (params: any) => { // Removed : any type annotation
+      valueFormatter: (params: any) => { 
         const rawDate = params.value;
         if (!rawDate) return '';
         const date = new Date(rawDate);
@@ -116,7 +116,7 @@ const Page = () => {
 
     return (
         <div style={{ height: "100vh", display: "flex", flexDirection: "column"}}>
-            <h1 style={{paddingLeft: "1rem", textAlign: "left", color:"#005f3e"}}>
+            <h1 style={{paddingLeft: "2rem", textAlign: "left", color:"#005f3e"}}>
                 Inventario de Productos
             </h1>
             <div style={{ flex: 1}}>

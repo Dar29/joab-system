@@ -26,12 +26,18 @@ export async function POST(request: NextRequest) {
       body.fecha_vencimiento !== undefined ||
       body.stock !== undefined ||
       body.precio_compra !== undefined ||
-      body.precio_venta !== undefined ||
-      body.id_proveedor !== undefined
+      body.precio_venta !== undefined
     ) {
+      if(body.stock === undefined || body.stock <= 0)
+      {
+        return NextResponse.json(
+          { message: 'Debe ingresar cantidad y tiene que ser mayor a 0' },
+          { status: 400 }
+        );
+      }
       if (
         !body.fecha_vencimiento ||
-        body.stock === undefined ||
+        body.stock === undefined || body.stock <= 0 ||
         body.precio_compra === undefined ||
         body.precio_venta === undefined ||
         body.id_proveedor == undefined

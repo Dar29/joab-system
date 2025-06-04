@@ -57,7 +57,7 @@ const Table: React.FC<TableProps> = ({ rowData, columnDefs }) => {
   };
 
   return (
-    <div style={{ height: "90%", display: "flex", flexDirection: "column" }}>
+    <div style={{ height: "70%", display: "flex", flexDirection: "column" ,margin:"2%"}}>
       <div style={{ display: "flex", alignItems: "center", padding: "5px" }}>
         <AddButton title="Agregar producto" onClick={handleAddProduct} />
         <input

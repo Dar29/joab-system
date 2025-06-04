@@ -1,23 +1,27 @@
+
 'use client'
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import EditButton from "./EditButton";
 import InventoryButton from "./InventoryButton";
 import ExitButton from "./ExitButton";
+import { useRouter } from 'next/navigation';
+
 
 interface ActionButtonsRendererProps {
-  data: any; // Los datos de la fila actual
-  // Puedes añadir más props si es necesario, por ejemplo, manejadores onClick específicos desde la tabla padre
+  data: any;
 }
 
 const ActionButtonsRenderer: React.FC<ActionButtonsRendererProps> = ({ data }) => {
+const router = useRouter();
+
   const handleEditClick = () => {
     console.log('Editar clicado para el producto:', data.id_producto);
   };
 
   const handleViewInventoryClick = () => {
-    console.log('Ver Inventario clicado para el producto:', data.id_producto);
+      router.push(`/productos/historial-inventario/${data.id_producto}`);
   };
 
   const handleDeactivateClick = () => {
