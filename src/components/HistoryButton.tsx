@@ -5,13 +5,15 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { red } from '@mui/material/colors';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+
 
 interface DeactivateButtonProps {
   title: string;
   onClick?: () => void;
 }
 
-const DeactivateButton: React.FC<DeactivateButtonProps> = ({ title, onClick }) => {
+const TrackingButton: React.FC<DeactivateButtonProps> = ({ title, onClick }) => {
   return (
     <Tooltip title={title} arrow>
       <IconButton
@@ -27,10 +29,10 @@ const DeactivateButton: React.FC<DeactivateButtonProps> = ({ title, onClick }) =
         }}
         aria-label={title}
       >
-        <RemoveCircleIcon sx={{ fontSize: 20 }} />
+       <AccessTimeIcon sx={{ fontSize: 20 }} />
       </IconButton>
     </Tooltip>
   );
 };
 
-export default DeactivateButton;
+export default TrackingButton;

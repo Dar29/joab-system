@@ -82,7 +82,26 @@ const Table: React.FC<TableProps> = ({ rowData, columnDefs }) => {
         columnDefs={columnDefs}
         rowData={filteredData}
         defaultColDef={defaultColDef}
-        sideBar
+        sideBar={{
+          toolPanels: [
+            {
+              id: 'columns',
+              labelDefault: 'Columnas',
+              labelKey: 'columns',
+              iconKey: 'columns',
+              toolPanel: 'agColumnsToolPanel',
+            },
+            {
+              id: 'filters',
+              labelDefault: 'Filtros',
+              labelKey: 'filters',
+              iconKey: 'filter',
+              toolPanel: 'agFiltersToolPanel',
+            },
+          ],
+          // 👇 Esto es lo importante
+          defaultToolPanel: undefined, // No abre ninguno al cargar
+        }}
       />
     </div>
   );

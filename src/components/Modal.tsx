@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'antd';
 import TableComp from './Tracking';
+import Chart from './Chart';
 
 interface ModalComponentProps {
   title?: string;
@@ -41,7 +42,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ title, id, open, loadin
       onCancel={onCancel}
       footer={null}
     >
-      <TableComp data={rowData}/>
+      <Chart/>
     </Modal>
   );
 };

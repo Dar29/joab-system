@@ -8,8 +8,8 @@ import ActionButtonsRenderer from '@/src/components/ActionButtonsRenderer';
 const columnDefs = [
     {
         field: "actions",
-        headerName: "Acciones",
-        width: 115, // Es posible que quieras aumentar el ancho para acomodar todos los botones
+        headerName: "Inventario",
+        width:150,//ible que quieras aumentar el ancho para acomodar todos los botones
         sortable: false,
         filter: false,
         resizable: false,
