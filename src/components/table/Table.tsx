@@ -57,8 +57,8 @@ const Table: React.FC<TableProps> = ({ rowData, columnDefs }) => {
   };
 
   return (
-    <div style={{ height: "70%", display: "flex", flexDirection: "column" ,margin:"2%"}}>
-      <div style={{ display: "flex", alignItems: "center", padding: "5px" }}>
+    <div style={{ height: "70%", display: "flex", flexDirection: "column" ,margin:"1%"}}>
+      <div style={{ display: "flex", alignItems: "center", padding: "3px" }}>
         <AddButton title="Agregar producto" onClick={handleAddProduct} />
         <input
           type="text"
@@ -99,8 +99,7 @@ const Table: React.FC<TableProps> = ({ rowData, columnDefs }) => {
               toolPanel: 'agFiltersToolPanel',
             },
           ],
-          // 👇 Esto es lo importante
-          defaultToolPanel: undefined, // No abre ninguno al cargar
+          defaultToolPanel: undefined,
         }}
       />
     </div>

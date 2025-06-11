@@ -47,8 +47,6 @@ const FormProduct: React.FC<FormProductProps> = ({ catalogos }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-
-
   const precioCompra = Form.useWatch("precio_compra", form);
   const margen = Form.useWatch("margen", form);
 

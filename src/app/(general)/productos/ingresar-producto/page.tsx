@@ -24,7 +24,7 @@ const IngresarProducto = () => {
       try {
         setLoading(true);
 
-        const catalogos = await fetch('http://localhost:3000/api/catalogs');
+        const catalogos = await fetch('http://localhost:3000/api/catalogs-details');
         const proveedores = await fetch('http://localhost:3000/api/proveedores')
         const productos = await fetch('http://localhost:3000/api/products');
         if (!catalogos.ok) {

@@ -19,11 +19,12 @@ const ActionButtonsRenderer: React.FC<ActionButtonsRendererProps> = ({ data }) =
   const [loading, setLoading] = useState(false);
 
   const handleEditClick = () => {
+    setModalOpen(true);
     console.log('Editar clicado para el producto:', data.id_producto);
   };
 
   const handleViewInventoryClick = () => {
-    setModalOpen(true); // 👈 Abre el modal
+    
   };
 
   const handleHistoryClick = () => {
@@ -40,7 +41,7 @@ const ActionButtonsRenderer: React.FC<ActionButtonsRendererProps> = ({ data }) =
 
       {/* 👇 Modal que se abre con el botón de Inventario */}
       <ModalComponent
-        title="Inventario del producto"
+        title="Editar producto"
         open={modalOpen}
         loading={loading}
         id={data.id_producto}

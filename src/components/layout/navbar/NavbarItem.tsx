@@ -11,7 +11,7 @@ import {
   SettingOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { Menu, Spin } from 'antd';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -53,9 +53,9 @@ const items: MenuItem[] = [
     label: 'Administración',
     icon: <SettingOutlined />,
     children: [
-      { key: '/admin/catalogos', label: 'Catálogos' },
-      { key: '/admin/roles', label: 'Roles' },
-      { key: '/admin/usuarios', label: 'Usuarios' },
+      { key: '/adm/catalogos', label: 'Catálogos' },
+      { key: '/adm/roles', label: 'Roles' },
+      { key: '/adm/usuarios', label: 'Usuarios' },
     ],
   },
 ];
