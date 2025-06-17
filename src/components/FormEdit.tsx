@@ -125,7 +125,8 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ data, onClose }) => {
   };
 
   return (
-    <Form
+    <>
+      <Form
         form={form}
         initialValues={{ id_tipo_venta: 52, margen: 30 }} 
         labelCol={{ span: 60 }}
@@ -209,18 +210,20 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ data, onClose }) => {
             <Radio value={47}> Sin Receta </Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item>
-        <Button htmlType="submit" type="primary" loading={loading} style={{marginTop:"20px", marginLeft:"600px"}}>
-          Guardar Cambios
-        </Button>
-      </Form.Item>
+        
         {errorMsg && (
           <AlertError message={errorMsg} />
         )}
         {successMsg && (
           <AlertSuccess message={successMsg} />
         )}
+       
       </Form>
+      <Button htmlType="submit" type="primary" loading={loading} style={{marginBottom:"15px", marginLeft:"500px"}}>
+          Guardar Cambios
+        </Button>
+    </>
+    
   );
 };
 

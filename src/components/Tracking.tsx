@@ -57,8 +57,8 @@ const TableComp: React.FC<TableProps> = ({ rowData, columnDefs }) => {
   };
 
   return (
-    <div style={{ height: "70%", display: "flex", flexDirection: "column" ,margin:"2%"}}>
-      <div style={{ display: "flex", alignItems: "center", padding: "5px" }}>
+    <div style={{ height: "70%", display: "flex", flexDirection: "column" }}>
+      <div style={{ display: "flex", alignItems: "center", paddingBottom: "15px" }}>
         <input
           type="text"
           placeholder="Buscar..."
@@ -82,7 +82,7 @@ const TableComp: React.FC<TableProps> = ({ rowData, columnDefs }) => {
         rowData={filteredData}
         defaultColDef={defaultColDef}
       />
-      <Box display="flex" justifyContent="space-between" paddingLeft={3} paddingRight={8} marginTop={10}>
+      <Box display="flex" justifyContent="space-between" paddingLeft={3} paddingRight={8} marginTop={5}>
         <ButtonComponent variant="contained" color="primary" text="Regresar" onClick={handleGoBack} />
       </Box>    </div>
   );

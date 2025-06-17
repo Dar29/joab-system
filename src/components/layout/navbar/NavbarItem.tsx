@@ -27,7 +27,7 @@ const items: MenuItem[] = [
     icon: <ProductOutlined />,
   },
   {
-    key: '/ventas',
+    key: '/facturacion',
     label: 'Facturación',
     icon: <FileTextOutlined />,
   },

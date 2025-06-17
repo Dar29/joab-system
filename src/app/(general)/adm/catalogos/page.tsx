@@ -11,6 +11,7 @@ import {
   Space,
   message,
   Spin,
+  Typography,
 } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
@@ -265,19 +266,19 @@ const Catalogs: React.FC = () => {
   };
 
   if (loading) {
-          return (
-              <div
-                  style={{
-                      height: '100vh',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                  }}
-              >
-                  <Spin size="large" />
-              </div>
-          );
-      }
+    return (
+      <div
+        style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        }}
+      >
+        <Spin size="large" />
+      </div>
+    );
+  }
   if (error) {
     return (
       <div style={{ textAlign: 'center', color: 'red', padding: 20 }}>
@@ -288,11 +289,11 @@ const Catalogs: React.FC = () => {
 
   return (
    <div style={{ height: "100vh", display: "flex", flexDirection: "column"}}>
-      <h1 style={{paddingLeft: "2rem", textAlign: "left", color:"#005f3e"}}>
+      <Typography.Title level={3} style={{ paddingLeft: '1rem', paddingTop:'1rem'}}>
         Gestion de Catalogos
-      </h1>
-      <div style={{ padding: "20px" }}>
-        <Button type="primary" icon={<PlusOutlined />} onClick={handleAddCatalog} style={{ marginBottom: 16 }}>
+      </Typography.Title>
+      <div style={{ padding: "10px" }}>
+        <Button type="primary" icon={<PlusOutlined />} onClick={handleAddCatalog} style={{ marginBottom: 16, marginLeft: '80%'}}>
         Agregar Catálogo
       </Button>
         <Table

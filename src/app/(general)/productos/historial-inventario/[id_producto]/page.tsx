@@ -2,7 +2,7 @@
 
 import Table from '@/src/components/table/Table';
 import TableComp from '@/src/components/Tracking';
-import { Spin } from 'antd';
+import { Spin, Typography } from 'antd';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -70,9 +70,9 @@ const HistorialInventario = () => {
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column"}}>
-      <h1 style={{paddingLeft: "2rem", textAlign: "left", color:"#005f3e"}}>
-        Historial Inventario
-      </h1>
+      <Typography.Title level={3} style={{ paddingLeft: '1rem'}}>
+        Movimientos de Inventario
+      </Typography.Title>
       <div style={{ flex: 1}}>
         <TableComp rowData={rowData} columnDefs={columns} />
       </div>

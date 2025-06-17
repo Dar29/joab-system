@@ -17,7 +17,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ title, open, loading, o
       open={open}
       onCancel={onCancel}
       footer={null}
-      width={"60%"}
+      width={"70%"}
     >
       {loading ? (
       <div

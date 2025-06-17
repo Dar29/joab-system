@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Table from '@/src/components/table/Table'; // Asegúrate de que la ruta es correcta
-import { Spin } from 'antd';
+import Table from '@/src/components/table/Table'; 
+import { Spin, Typography } from 'antd';
 import ActionButtonsRenderer from '@/src/components/ActionButtonsRenderer';
 
 const columnDefs = [
     {
         field: "actions",
         headerName: "Inventario",
-        width:150,//ible que quieras aumentar el ancho para acomodar todos los botones
+        width:150,
         sortable: false,
         filter: false,
         resizable: false,
@@ -36,7 +36,7 @@ const columnDefs = [
     {
       field: "fecha_grabacion",
       headerName: "Fecha Grabación", hide: true,
-      valueFormatter: (params: any) => { // Removed : any type annotation for cleaner code
+      valueFormatter: (params: any) => { 
         const rawDate = params.value;
         if (!rawDate) return ''; // si es null, undefined o vacío
         const date = new Date(rawDate);
@@ -116,9 +116,9 @@ const Page = () => {
 
     return (
         <div style={{ height: "100vh", display: "flex", flexDirection: "column"}}>
-            <h1 style={{paddingLeft: "2rem", textAlign: "left", color:"#005f3e", marginBottom:"2px"}}>
+            <Typography.Title level={3} style={{ padding: '1rem', marginBottom: '0.1%'}}>
                 Inventario de Productos
-            </h1>
+            </Typography.Title>
             <div style={{ flex: 1}}>
                 <Table rowData={rowData} columnDefs={columnDefs} />
             </div>

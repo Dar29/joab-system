@@ -20,12 +20,16 @@
     "ag-grid-react": "^33.3.0",
     "antd": "^5.25.0",
     "antd-style": "^3.7.1",
+    "file-saver": "^2.0.5",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.1",
     "mssql": "^11.0.1",
     "next": "15.3.2",
     "nprogress": "^0.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.6.0"
+    "react-router-dom": "^7.6.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
