@@ -7,6 +7,7 @@ import InventoryButton from "./InventoryButton";
 import TrackingButton from "./HistoryButton";
 import ModalComponent from './Modal'; // ⬅️ Asegúrate de importar el modal
 import { useRouter } from 'next/navigation';
+import EditProductForm from './FormEdit';
 
 interface ActionButtonsRendererProps {
   data: any;
@@ -39,14 +40,14 @@ const ActionButtonsRenderer: React.FC<ActionButtonsRendererProps> = ({ data }) =
         <TrackingButton title="Ver historial" onClick={handleHistoryClick} />
       </Box>
 
-      {/* 👇 Modal que se abre con el botón de Inventario */}
       <ModalComponent
         title="Editar producto"
         open={modalOpen}
-        loading={loading}
-        id={data.id_producto}
+        loading={false} // El loading ahora lo gestiona el form
         onCancel={() => setModalOpen(false)}
-      />
+      >
+        <EditProductForm data={data} onClose={() => setModalOpen(false)} />
+      </ModalComponent>
     </>
   );
 };

@@ -48,8 +48,6 @@ export async function POST(request: NextRequest) {
         );
       }
     }
-
-
     // Insertar en la base de datos
     const result = await executeSP('sp_inserta_producto', body);
 
