@@ -20,6 +20,7 @@
     "ag-grid-react": "^33.3.0",
     "antd": "^5.25.0",
     "antd-style": "^3.7.1",
+    "dayjs": "^1.11.13",
     "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.1",

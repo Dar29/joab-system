@@ -288,7 +288,7 @@ const Catalogs: React.FC = () => {
   }
 
   return (
-   <div style={{ height: "100vh", display: "flex", flexDirection: "column"}}>
+    <div style={{ minHeight: "100vh", paddingBottom: "2rem" }}>
       <Typography.Title level={3} style={{ paddingLeft: '1rem', paddingTop:'1rem'}}>
         Gestion de Catalogos
       </Typography.Title>
@@ -334,6 +334,8 @@ const Catalogs: React.FC = () => {
         open={isDetailModalVisible}
         footer={null}
         onCancel={() => setIsDetailModalVisible(false)}
+        getContainer={false}
+        style={{ zIndex: 1050 }} 
       >
         <Form form={detailForm} layout="vertical" onFinish={onDetailFormFinish}>
           <Form.Item name="valor" label="Valor" rules={[{ required: true }]}>
@@ -352,6 +354,7 @@ const Catalogs: React.FC = () => {
           </Form.Item>
         </Form>
       </Modal>
+
       </div>
       
     </div>

@@ -88,7 +88,7 @@ const TableCatalogs: React.FC<TableProps> = ({ rowData, columnDefs }) => {
 
   return (
     <div style={{ height: "70%", display: "flex", flexDirection: "column" ,margin:"1%"}}>
-      <Table
+      {/* <Table
           columns={catalogColumns}
           dataSource={catalogs}
           expandable={{ expandedRowRender }}
@@ -100,7 +100,7 @@ const TableCatalogs: React.FC<TableProps> = ({ rowData, columnDefs }) => {
             defaultPageSize: 10,
             showTotal: (total, range) => `${range[0]}-${range[1]} de ${total} ítems`,
           }}
-        />
+        /> */}
     </div>
   );
 };

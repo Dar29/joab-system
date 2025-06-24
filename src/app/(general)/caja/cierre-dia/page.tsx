@@ -71,7 +71,7 @@ const CierreDiaPage: React.FC = () => {
       <Row gutter={24}>
         {/* Card de resumen */}
         <Col xs={24} md={12}>
-          <Card bordered>
+          <Card>
             <Descriptions column={1} bordered>
               <Descriptions.Item label="Fecha de Apertura">
                 {dayjs(datos.fecha_apertura).format('DD/MM/YYYY HH:mm')}
